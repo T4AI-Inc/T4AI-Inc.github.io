@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T4AI株式会社</title>
+    
+    <meta name="description" content="未来のテクノロジーとアイデアを融合し、新しい価値を創造するデジタルクリエイティブカンパニー「T4AI株式会社」のコーポレートサイトです。">
+    <meta property="og:title" content="T4AI株式会社">
+    <meta property="og:description" content="未来のテクノロジーとアイデアを融合し、新しい価値を創造するデジタルクリエイティブカンパニーです">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="T4AI株式会社">
+
+    <link rel="icon" href="assets/hp_logo1.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- カリグラフィ・基本設定 --- */
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --text-light: #a0aec0;
+            --pure-white: #ffffff;
+            --accent-purple: #805ad5; 
+            --accent-pink: #d53f8c;   
+            --gradient-primary: linear-gradient(135deg, #805ad5 0%, #d53f8c 100%);
+            --gradient-animated: linear-gradient(270deg, #805ad5, #d53f8c, #6b46c1, #b83280);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- 動的背景キャンバス --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        /* --- ヘッダー --- */
+        header {
+            width: 100%;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        nav a:hover {
+            color: var(--accent-purple);
+        }
+
+        /* --- ヒーローセクション --- */
+        .hero {
+            min-height: 95vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            background: radial-gradient(circle at 80% 20%, rgba(213, 63, 140, 0.08) 0%, transparent 60%),
+                        radial-gradient(circle at 20% 80%, rgba(128, 54, 213, 0.08) 0%, transparent 60%);
+        }
+
+        .hero-logo-bg {
+            position: absolute;
+            width: 580px;
+            height: 580px;
+            background-image: url('assets/hp_logo2.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.09;
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(0.5px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes flowGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero h1 {
+            font-size: 110px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            line-height: 1.0;
+            background: var(--gradient-animated);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: flowGradient 6s ease infinite;
+        }
+
+        .hero h2 {
+            font-size: 20px;
+            font-weight: 400;
+            color: #4a5568;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+            opacity: 1.0;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- セクション共通 --- */
+        section {
+            padding: 100px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 4px;
+            background: var(--gradient-primary);
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- 事業内容 (Services) --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid #edf2f7;
+            padding: 40px 30px;
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(128, 54, 213, 0.08);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(128, 54, 213, 0.1);
+            color: var(--accent-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .service-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .service-card.pink .service-icon {
+            background: rgba(213, 63, 140, 0.1);
+            color: var(--accent-pink);
+        }
+
+        .service-card h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .service-card p {
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        /* --- 会社概要 (Company) --- */
+        .company-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+        }
+
+        .company-table tr {
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .company-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .company-table th, .company-table td {
+            padding: 24px 20px;
+            text-align: left;
+        }
+
+        .company-table th {
+            width: 25%;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 16px;
+        }
+
+        .company-table td {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* --- お問い合わせ (Contact) --- */
+        .contact {
+            text-align: center;
+            background: rgba(250, 250, 250, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid #edf2f7;
+            border-radius: 24px;
+            padding: 80px 40px;
+            margin-bottom: 100px;
+        }
+
+        .contact p {
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 40px;
+            font-weight: 600;
+            color: var(--pure-white);
+            background: var(--gradient-primary);
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(213, 63, 140, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(213, 63, 140, 0.3);
+        }
+
+        /* --- TOPに戻るボタン (新規追加) --- */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--gradient-primary);
+            color: var(--pure-white);
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(213, 63, 140, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(213, 63, 140, 0.4);
+            color: var(--pure-white);
+        }
+
+        /* --- フッター --- */
+        footer {
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid #edf2f7;
+            font-size: 13px;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 20px; justify-content: center; }
+            nav ul { gap: 20px; }
+            nav a { font-size: 14px; }
+            .hero h1 { font-size: 56px; }
+            .hero h2 { font-size: 16px; letter-spacing: 1px; margin-bottom: 30px; }
+            .hero-logo-bg { width: 340px; height: 340px; }
+            .company-table th, .company-table td {
+                display: block;
+                width: 100%;
+                padding: 15px;
+            }
+            .company-table th { border: none; padding-bottom: 0; }
+            
+            /* スマホでは少しボタンサイズと位置を調整 */
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#company">Company</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-logo-bg"></div>
+        
+        <div class="hero-content">
+            <h1>T4AI Inc.</h1>
+            <h2>T4AI株式会社</h2>
+            <p>未来のテクノロジーとアイデアを融合し<br class="pc-only">新しい価値を創造する<br class="pc-only">デジタルクリエイティブカンパニーです</p>
+        </div>
+    </section>
+
+    <section id="services">
+        <h2 class="section-title">Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/>
+                    </svg>
+                </div>
+                <h3>アプリケーション開発</h3>
+                <p>ユーザーの課題を解決する、利便性とモダンなデザインを兼ね備えたソフトウェアの自社開発を進めています</p>
+            </div>
+            <div class="service-card pink">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                </div>
+                <h3>デジタルコンテンツ制作</h3>
+                <p>次世代の開発アプローチや、フリーランスからのマイクロ法人化による事業最適化のリアルなど、時代に即した実践的なデジタルコンテンツの企画・制作を行っています</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="company">
+        <h2 class="section-title">Company</h2>
+        <table class="company-table">
+            <tr>
+                <th>会社名</th>
+                <td>T4AI株式会社</td>
+            </tr>
+            <tr>
+                <th>代表者</th>
+                <td>代表取締役 田中 明季</td>
+            </tr>
+            <tr>
+                <th>設立日</th>
+                <td>2026年7月14日</td>
+            </tr>
+            <tr>
+                <th>所在地</th>
+             <td>
+              〒150-0021<br>
+              東京都渋谷区恵比寿西2丁目4番8号<br class="sp-only"> ウィンド恵比寿ビル8F
+            </td>
+            </tr>
+        </table>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 class="section-title">Contact</h2>
+        <p>お問い合わせは、以下のボタンよりGoogleフォームへお進みください</p>
+        
+        <a href="https://forms.gle/qELeqTxcybKGARSHA" target="_blank" class="btn">お問い合わせフォーム</a>
+    </section>
+
+    <a href="#" class="back-to-top" id="backToTop">▲ TOP</a>
+
+    <footer>
+        <p>&copy; T4AI Inc. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // --- TOPに戻るボタンの表示・非表示制御 (新規追加) ---
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+        let orbs = [];
+        let mouse = { x: -1000, y: -1000 };
+        let targetMouse = { x: -1000, y: -1000 };
+
+        const colors = ['rgba(128, 90, 213, 0.3)', 'rgba(213, 63, 140, 0.3)', 'rgba(160, 174, 192, 0.2)'];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        window.addEventListener('mousemove', (e) => {
+            targetMouse.x = e.clientX;
+            targetMouse.y = e.clientY;
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                targetMouse.x = e.touches[0].clientX;
+                targetMouse.y = e.touches[0].clientY;
+            }
+        });
+        window.addEventListener('touchend', () => {
+            targetMouse.x = -1000;
+            targetMouse.y = -1000;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
+                this.radius = Math.random() * 3 + 1.5;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        class Orb {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * 80 + 40;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.baseAlpha = Math.random() * 0.1 + 0.03;
+                this.pulseSpeed = Math.random() * 0.02 + 0.01;
+                this.angle = Math.random() * Math.PI * 2;
+                this.colorType = Math.random() > 0.5 ? '128, 90, 213' : '213, 63, 140';
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.angle += this.pulseSpeed;
+
+                if (this.x < -150 || this.x > width + 150 || this.y < -150 || this.y > height + 150) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                const currentAlpha = this.baseAlpha + Math.sin(this.angle) * 0.03;
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.radius
+                );
+                gradient.addColorStop(0, `rgba(${this.colorType}, ${currentAlpha})`);
+                gradient.addColorStop(0.6, `rgba(${this.colorType}, ${currentAlpha * 0.5})`);
+                gradient.addColorStop(1, `rgba(${this.colorType}, 0)`);
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particleCount = Math.min(Math.floor(window.innerWidth / 15), 60);
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        const orbCount = Math.min(Math.floor(window.innerWidth / 50), 18);
+        for (let i = 0; i < orbCount; i++) {
+            orbs.push(new Orb());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            mouse.x += (targetMouse.x - mouse.x) * 0.08;
+            mouse.y += (targetMouse.y - mouse.y) * 0.08;
+
+            for (let i = 0; i < orbs.length; i++) {
+                orbs[i].update();
+                orbs[i].draw();
+            }
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        const alpha = (1 - dist / 150) * 0.15;
+                        ctx.strokeStyle = `rgba(128, 90, 213, ${alpha})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            if (mouse.x !== -1000) {
+                const glowRadius = 380;
+                const gradient = ctx.createRadialGradient(
+                    mouse.x, mouse.y, 0,
+                    mouse.x, mouse.y, glowRadius
+                );
+                gradient.addColorStop(0, 'rgba(213, 63, 140, 0.08)');
+                gradient.addColorStop(0.4, 'rgba(128, 90, 213, 0.05)');
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, width, height);
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
