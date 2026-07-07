@@ -166,7 +166,7 @@
 
         /* --- セクション共通 --- */
         section {
-            padding: 100px 20px;
+            padding: 80px 20px;
             max-width: 1000px;
             margin: 0 auto;
             position: relative;
@@ -239,9 +239,101 @@
             margin-bottom: 16px;
         }
 
-        .service-card p {
+        .service-desc {
             font-size: 15px;
             color: var(--text-muted);
+        }
+
+        /* --- 取扱プロダクト (Products) 新設 --- */
+        .products-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .product-item {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
+            padding: 30px 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(128, 54, 213, 0.08);
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed rgba(226, 232, 240, 0.8);
+        }
+
+        .product-header h3 {
+            font-size: 18px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .status-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-dev {
+            color: var(--accent-purple);
+            background: rgba(128, 90, 213, 0.1);
+        }
+
+        .badge-write {
+            color: var(--accent-pink);
+            background: rgba(213, 63, 140, 0.1);
+        }
+
+        .product-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .spec-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: #f7f8fa;
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin-right: 16px;
+            width: 85px;
+            text-align: center;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .spec-text {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        .spec-price {
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 14px;
+            margin-right: 4px;
         }
 
         /* --- 会社概要 (Company) --- */
@@ -311,7 +403,7 @@
             box-shadow: 0 6px 20px rgba(213, 63, 140, 0.3);
         }
 
-        /* --- TOPに戻るボタン (新規追加) --- */
+        /* --- TOPに戻るボタン --- */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -361,6 +453,10 @@
             .hero h1 { font-size: 56px; }
             .hero h2 { font-size: 16px; letter-spacing: 1px; margin-bottom: 30px; }
             .hero-logo-bg { width: 340px; height: 340px; }
+            
+            .product-item { padding: 20px; }
+            .product-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            
             .company-table th, .company-table td {
                 display: block;
                 width: 100%;
@@ -368,7 +464,6 @@
             }
             .company-table th { border: none; padding-bottom: 0; }
             
-            /* スマホでは少しボタンサイズと位置を調整 */
             .back-to-top {
                 bottom: 20px;
                 right: 20px;
@@ -386,6 +481,7 @@
         <nav>
             <ul>
                 <li><a href="#services">Services</a></li>
+                <li><a href="#products">Products</a></li>
                 <li><a href="#company">Company</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -412,8 +508,9 @@
                     </svg>
                 </div>
                 <h3>アプリケーション開発</h3>
-                <p>ユーザーの課題を解決する、利便性とモダンなデザインを兼ね備えたソフトウェアの自社開発を進めています</p>
+                <p class="service-desc">ユーザーの課題を解決する、利便性とモダンなデザインを兼ね備えたソフトウェアの自社開発を進めています</p>
             </div>
+            
             <div class="service-card pink">
                 <div class="service-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -424,8 +521,57 @@
                     </svg>
                 </div>
                 <h3>デジタルコンテンツ制作</h3>
-                <p>次世代の開発アプローチや、フリーランスからのマイクロ法人化による事業最適化のリアルなど、時代に即した実践的なデジタルコンテンツの企画・制作を行っています</p>
+                <p class="service-desc">次世代の開発アプローチや、フリーランスからのマイクロ法人化による事業最適化のリアルなど、時代に即した実践的なデジタルコンテンツの企画・制作を行っています</p>
             </div>
+        </div>
+    </section>
+
+    <section id="products">
+        <h2 class="section-title">Products</h2>
+        <div class="products-list">
+            
+            <div class="product-item">
+                <div class="product-header">
+                    <h3>アプリケーション</h3>
+                    <span class="status-badge badge-dev">開発中</span>
+                </div>
+                <div class="product-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">PLATFORM</span>
+                        <span class="spec-text">iOS / Android<span style="font-size: 11px;">  ※App Store / Google Play にて配信</span></span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">PRICE</span>
+                        <span class="spec-text">¥100〜</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">FLOW</span>
+                        <span class="spec-text">各ストアにてダウンロード・決済完了後、即時利用可能</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-item">
+                <div class="product-header">
+                    <h3>デジタルコンテンツ</h3>
+                    <span class="status-badge badge-write">公開準備中</span>
+                </div>
+                <div class="product-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">PLATFORM</span>
+                        <span class="spec-text">note</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">PRICE</span>
+                        <span class="spec-text">¥500〜</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">FLOW</span>
+                        <span class="spec-text">オンライン決済完了後、即時閲覧可能</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -468,7 +614,6 @@
     </footer>
 
     <script>
-        // --- TOPに戻るボタンの表示・非表示制御 (新規追加) ---
         const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
